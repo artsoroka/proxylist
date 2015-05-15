@@ -67,6 +67,7 @@ var getPage = function(pageId, listReadyCallback){
   request(options, function (error, response, body) {
     if ( error && response.statusCode == 200) {
       console.log(error, response, body); 
+      return listReadyCallback(error); 
     }
     console.log('Starting parsing page ', pageId ); 
     
