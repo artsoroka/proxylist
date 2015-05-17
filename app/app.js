@@ -29,6 +29,12 @@ var updateProxyList = function(db, updateDatabase){
     });
 }; 
 
+var initializeProxyList = function(db, interval, callback){
+    updateProxyList(db, callback); 
+    setInterval(function(){
+        updateProxyList(db, callback); 
+    }, interval);
+}; 
 
 module.exports = function(config){
     
@@ -37,11 +43,9 @@ module.exports = function(config){
         autoload: 'true'
     });
     
-    setInterval(function(){
-        updateProxyList(proxyList, function(){
-            proxyList.loadDatabase(); 
-        }); 
-    }, config.parser.updateInterval); 
+    initializeProxyList(proxyList, config.parser.updateInterval, function(){
+        proxyList.loadDatabase(); 
+    }); 
     
     app.get('/', function(req, res){
         res.send('welcome to proxy list checker'); 
