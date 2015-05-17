@@ -1,16 +1,30 @@
 {
   "name": "proxylist",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "description": "checking ip address against proxy list ",
+  "main": "server.js",
   "dependencies": {
     "cheerio": "^0.19.0",
     "nedb": "^1.1.2",
     "request": "^2.55.0"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsoroka/proxylist"
+  },
+  "keywords": [
+    "proxy",
+    "list",
+    "parser"
+  ],
+  "author": "Artem Soroka <art.soroka@yandex.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artsoroka/proxylist/issues"
+  },
+  "homepage": "https://github.com/artsoroka/proxylist"
 }
