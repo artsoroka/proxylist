@@ -1,6 +1,7 @@
 var express   = require('express'); 
 var app       = express(); 
 var Datastore = require('nedb'); 
+var parser    = require('./lib/parser'); 
 
 var isValid   = function(ip){
     var ipAddress = ip.match(/\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}/); 
@@ -11,12 +12,36 @@ var isValid   = function(ip){
     
 }; 
 
+var updateProxyList = function(db, updateDatabase){
+        
+    parser.start(1, function(err, data){
+      if(err) return console.log(err); 
+      
+      db.insert(data, function(error){
+        
+        if( error ) return console.log(error); 
+        
+        updateDatabase(); 
+        console.log('proxy list saved'); 
+      
+      }); 
+      
+    });
+}; 
+
+
 module.exports = function(config){
     
     var proxyList = new Datastore({
         filename: config.db.path,  
         autoload: 'true'
     });
+    
+    setInterval(function(){
+        updateProxyList(proxyList, function(){
+            proxyList.loadDatabase(); 
+        }); 
+    }, config.parser.updateInterval); 
     
     app.get('/', function(req, res){
         res.send('welcome to proxy list checker'); 
